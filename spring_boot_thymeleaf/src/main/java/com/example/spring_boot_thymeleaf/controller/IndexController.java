@@ -23,6 +23,7 @@ public class IndexController {
 		list.add(new Account("Maria", "玛利亚", "e10adc3949ba59abbe56e", "清算人员", "19999999999"));
         m.addAttribute("accountList",list);
 		//请求转发
+		//把当前的request和response转发到另一个请求，保存在request中的数据会传给response然后相应给客户端
         return "hello";
 	}
 }
