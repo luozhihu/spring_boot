@@ -43,6 +43,8 @@ public class RedisConfig extends CachingConfigurerSupport {
 //		cacheManager.setDefaultExpiration(10000);
 //		return cacheManager;
 //	}
+
+	//配置Redis作为Spring的缓存管理
 	@Bean
 	public CacheManager cacheManager(RedisConnectionFactory factory) {
 		RedisCacheManager cacheManager = RedisCacheManager.create(factory);
@@ -51,6 +53,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 
 	@Bean
 	public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
+		// 创建RedisTemplate<String, Object>对象，并且配置连接工厂
 		StringRedisTemplate template = new StringRedisTemplate(factory);
 		setSerializer(template);// 设置序列化工具
 		template.afterPropertiesSet();
@@ -58,12 +61,18 @@ public class RedisConfig extends CachingConfigurerSupport {
 	}
 
 	private void setSerializer(StringRedisTemplate template) {
+		//忽略警告
 		@SuppressWarnings({ "rawtypes", "unchecked" })
+		// 定义Jackson2JsonRedisSerializer序列化对象
 		Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+		//对象映射
 		ObjectMapper om = new ObjectMapper();
+		// 指定要序列化的域，field,get和set,以及修饰符范围，ANY是都有包括private和public
 		om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+		// 指定序列化输入的类型，类必须是非final修饰的，final修饰的类，比如String,Integer等会报异常
 		om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
 		jackson2JsonRedisSerializer.setObjectMapper(om);
+		// redis value 序列化方式使用jackson
 		template.setValueSerializer(jackson2JsonRedisSerializer);
 	}
 }
