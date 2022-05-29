@@ -1,0 +1,15 @@
+server:
+  port: 80
+
+spring:
+  mail:
+    host: smtp.qq.com
+    username: 2310697151@qq.com
+    password: qhzduqcencofeaag
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true

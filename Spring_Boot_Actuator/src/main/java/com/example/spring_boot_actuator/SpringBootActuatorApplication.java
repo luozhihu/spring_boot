@@ -1,0 +1,19 @@
+package com.example.spring_boot_actuator;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@SpringBootApplication
+public class SpringBootActuatorApplication {
+
+    @RequestMapping("/")
+    String index() {
+        return "hello spring boot";
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(SpringBootActuatorApplication.class, args);
+    }
+
+}

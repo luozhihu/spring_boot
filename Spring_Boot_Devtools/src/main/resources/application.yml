@@ -1,0 +1,6 @@
+spring:
+  devtools:
+    restart:
+      enabled: true # 热部署开关
+    freemarker:
+      cache: false # 页面不加载缓存，修改即时生效
